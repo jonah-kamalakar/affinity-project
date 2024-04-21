@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+
+        p,
+        h2 {
+            margin: 0px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0px;
+        }
+
+        .poll-widget {
+            background-color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 300px;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            gap: 24px;
+            border-top-left-radius: 24px;
+            -webkit-box-shadow: -24px -24px 39px -23px rgba(138, 138, 138, 0.48);
+            -moz-box-shadow: -24px -24px 39px -23px rgba(138, 138, 138, 0.48);
+            box-shadow: -24px -24px 39px -23px rgba(138, 138, 138, 0.48);
+
+        }
+
+        .widget-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .widget-close-button {
+            cursor: pointer;
+        }
+
+        .widget-body {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-direction: column;
+        }
+
+        .widget-main-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .widget-main-container .poll-question {
+            font-size: 20px;
+        }
+
+        .widget-main-container ul {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .widget-main-container p,
+        .widget-main-container li {
+            font-size: 14px;
+        }
+
+        .widget-footer {
+            width: 100%;
+            font-size: 12px;
+        }
+
+        .poll-options {
+            width: 100%;
+        }
+
+        .poll-option {
+            cursor: pointer;
+        }
+
+        .poll-submit {
+            background-color: rgba(51, 51, 51, 0.05);
+            border-radius: 8px;
+            border-width: 0;
+            color: #333333;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 6px 8px;
+            text-align: center;
+            transition: all 200ms;
+            vertical-align: baseline;
+            white-space: nowrap;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .poll-submit:hover {
+            background-color: rgba(51, 51, 51, 0.20);
+        }
+
+        .questions-container {
+            width: 100%;
+            height: 0px;
+        }
+
+        .questions-container form {
+            display: none;
+        }
+
+        .questions-container form {
+            width: 100%;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        progress {
+            -webkit-appearance: none;
+            appearance: none;
+
+            width: 100%;
+            height: 20px;
+            margin-top: 10px;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #eee;
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+
+        }
+
+        progress::-webkit-progress-value {
+            background-image:
+                -webkit-linear-gradient(-45deg,
+                    transparent 33%, rgba(0, 0, 0, .1) 33%,
+                    rgba(0, 0, 0, .1) 66%, transparent 66%),
+                -webkit-linear-gradient(top,
+                    rgba(255, 255, 255, .25),
+                    rgba(0, 0, 0, .25)),
+                -webkit-linear-gradient(left, #09c, #f44);
+
+            border-radius: 2px;
+            background-size: 35px 20px, 100% 100%, 100% 100%;
+            -webkit-animation: animate-stripes 5s linear infinite;
+            animation: animate-stripes 5s linear infinite;
+        }
+
+        progress::-webkit-progress-value::before {
+            content: '80%';
+            position: absolute;
+            right: 0;
+            top: -125%;
+        }
+
+        @-webkit-keyframes animate-stripes {
+            100% {
+                background-position: -100px 0px;
+            }
+        }
+
+        @keyframes animate-stripes {
+            100% {
+                background-position: -100px 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Poll Widget Example</h1>
+    <div class="poll-widget">
+        <div class="widget-head">
+            <div class="widget-title-container">
+                <h2 class="widget-title">Poll</h2>
+            </div>
+            <div class="widget-close-button-container">
+                <p class="widget-close-button" onclick="closePoll()">&times</p>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main-container">
+                <p class="poll-question">How you like the Opinary test?</p>
+                <input type="hidden" name="poll-id" id="poll-id" value="1">
+                <ul class="poll-options">
+                    <li class="poll-option"><label><input type="radio" name="color" value="1">"It was great and so
+                            challenging."</label></li>
+                    <li class="poll-option"><label></label><input type="radio" name="color" value="2">Not bad, but you
+                        can improve.</label>
+                    </li>
+                    <li class="poll-option"><label></label><input type="radio" name="color" value="3">It was a
+                        nightmare, never again.</label>
+                    </li>
+                </ul>
+                <button class="poll-submit" onclick="submitVote(event)">Submit</button>
+            </div>
+            <div class="widget-footer">
+                <a href="javascript:void(0)" rel="noopener noreferrer" id="change-questions-button"
+                    onclick="changeQuestions()">
+                    Add Poll</a> | <a href="javascript:void(0)" rel="noopener noreferrer" id="change-questions-button"
+                    onclick="changePoll()">
+                    Change Poll</a>
+            </div>
+        </div>
+        <div class="questions-container">
+            <form action="/index.html" id="add-question-form">
+                <label for="question">Enter Question</label>
+                <input type="text" name="question" id="new-poll-question" required>
+                <label for="poll-answer-1">Enter Option 1</label>
+                <input type="text" name="poll-answer-1" id="new-poll-answer-1" required>
+                <label for="poll-answer-2">Enter Option 2</label>
+                <input type="text" name="poll-answer-2" id="new-poll-answer-2" required>
+                <label for="poll-answer-3">Enter Option 3</label>
+                <input type="text" name="poll-answer-3" id="new-poll-answer-3" required>
+                <button class="poll-save-submit" onclick="savePoll(event)">Save Poll</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function setPlaceholderPoll() {
+            let poll = {
+                id: 1,
+                question: 'How you like the Opinary test?',
+                display: 1,
+                options: {
+                    1: { text: "It was great and so challenging.", votes: 0 },
+                    2: { text: "Not bad, but you can improve.", votes: 0 },
+                    3: { text: "It was a nightmare, never again.", votes: 0 }
+                }
+            }
+            localStorage.setItem('poll-' + poll.id, JSON.stringify(poll));
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
